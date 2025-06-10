@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Casa do Microondas - Contato</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* Estilos Gerais */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background-image: url('https://www.revistacircuito.com/wp-content/uploads/2018/03/cafe-reparo.png');
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center center;
+      background-repeat: no-repeat;
+      color: #f4e3c1;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #5b1f09;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+
+    /* Cabeçalho */
+    header {
+      background-color: #6b240d;
+      padding: 10px 20px;
+      color: #f4e3c1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    /* Grupo Logo e Telefone */
+    .header-logo-and-phone {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      flex-shrink: 0;
+    }
+
+    .header-logo img {
+      width: 200px;
+      height: auto;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .header-phone {
+      font-size: 1.1em;
+      font-weight: bold;
+      white-space: nowrap;
+      text-align: left;
+    }
+
+    /* Ocultar h1, pois não é mais necessário */
+    header h1 {
+      display: none;
+    }
+
+    /* Grupo de Informações de Serviço */
+    .header-service-info {
+      flex-grow: 1;
+      text-align: center;
+      color: #f4e3c1;
+      margin-left: 20px;
+      padding: 5px;
+    }
+
+    .header-service-info h3 {
+        font-size: 1.3em;
+        font-weight: 700;
+        margin-bottom: 5px;
+        line-height: 1.2;
+    }
+
+    .header-service-info p {
+        font-size: 0.9em;
+        margin-bottom: 3px;
+    }
+
+    .header-service-info .phone-numbers-alt {
+        font-size: 1.1em;
+        font-weight: 700;
+        display: block;
+        margin-top: 5px;
+    }
+
+    .header-service-info .phone-numbers-alt a {
+        color: #f4e3c1;
+        text-decoration: none;
+    }
+
+    .header-service-info .phone-numbers-alt a:hover {
+        text-decoration: underline;
+    }
+
+    /* Nova Barra de Serviços */
+    .servicos-bar {
+      background-color: #6b240d;
+      padding: 15px 0;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .servicos-bar a {
+      color: #f4e3c1;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 10px 20px;
+      border: 2px solid #f4e3c1;
+      border-radius: 25px;
+      transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+      display: inline-block;
+      display: flex;
+      flex-direction: column; /* Coloca imagem acima do texto */
+      align-items: center; /* Centraliza horizontalmente a imagem e o texto */
+      white-space: nowrap; /* Impede que o texto quebre linha */
+    }
+
+    .servicos-bar a img {
+      height: 100px; /* Tamanho da imagem dentro do botão */
+      width: auto;
+      margin-bottom: -20px; /* Margem negativa para aproximar a imagem do texto */
+    }
+
+    .servicos-bar a:hover {
+      background-color: #f4e3c1;
+      color: #6b240d;
+      transform: translateY(-2px);
+    }
+
+    /* Títulos de Seção */
+    h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #f4e3c1;
+    }
+    
+    /* Botão de Abrir Pop-up */
+    .open-popup-btn {
+      display: block;
+      margin: 40px auto 20px auto; /* Ajustado para dar espaço antes das unidades */
+      padding: 15px 30px;
+      background-color: #f4e3c1;
+      color: #6b240d;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      text-decoration: none;
+      text-align: center;
+      max-width: 300px;
+    }
+
+    .open-popup-btn:hover {
+      background-color: #ffe6b3;
+    }
+
+    /* Removido a seção de Unidades do Conteúdo */
+    .unidades-section {
+      display: none;
+    }
+
+    /* Estilos do Pop-up */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      visibility: hidden;
+      opacity: 0;
+      transition: visibility 0.3s ease, opacity 0.3s ease;
+    }
+
+    .popup-overlay.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .popup-content {
+      background: #5b1f09;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+      width: 90%;
+      max-width: 500px;
+      position: relative;
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+
+    .popup-overlay.active .popup-content {
+      transform: scale(1);
+    }
+
+    .close-popup-btn {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 1.8em;
+      color: #f4e3c1;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.3s ease;
+    }
+
+    .close-popup-btn:hover {
+      color: #ffe6b3;
+    }
+
+    /* Formulário de Contato dentro do Pop-up */
+    .popup-content form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .popup-content label {
+      font-weight: bold;
+      color: #f4e3c1;
+    }
+
+    .popup-content input, .popup-content textarea {
+      padding: 12px;
+      border: 1px solid #f4e3c1;
+      border-radius: 5px;
+      background-color: #f4e3c1;
+      color: #5b1f09;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .popup-content input:focus, .popup-content textarea:focus {
+      outline: none;
+      border-color: #ffe6b3;
+    }
+
+    .popup-content button[type="submit"] {
+      margin-top: 20px;
+      padding: 12px 20px;
+      background-color: #f4e3c1;
+      color: #6b240d;
+      border: none;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      align-self: flex-start;
+    }
+
+    .popup-content button[type="submit"]:hover {
+      background-color: #ffe6b3;
+    }
+
+    /* Rodapé */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #6b240d;
+      color: #f4e3c1;
+      margin-top: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    .footer-logo img {
+      width: 150px;
+      height: auto;
+      display: block;
+      margin-right: 20px;
+    }
+
+    /* Novos estilos para os botões de unidade no container */
+    .unidades-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 30px; /* Espaço acima dos botões */
+      margin-bottom: 40px; /* Espaço abaixo dos botões */
+    }
+
+    .unidades-container a {
+      color: #6b240d;
+      background-color: #f4e3c1;
+      text-decoration: none;
+      font-weight: bold;
+      padding: 12px 25px; /* Ajustado para ser mais visível */
+      border: 1px solid #f4e3c1;
+      border-radius: 25px; /* Mais arredondado */
+      transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+      display: inline-block;
+      white-space: nowrap;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2); /* Sutil sombra */
+    }
+
+    .unidades-container a:hover {
+      background-color: #ffe6b3;
+      color: #5b1f09;
+      transform: translateY(-2px); /* Efeito de elevação */
+    }
+
+    /* Remover estilos antigos do footer para as unidades */
+    .footer-unidades-buttons {
+      display: none; /* Oculta a div que continha os botões no footer */
+    }
+
+    .footer-copy {
+      width: 100%;
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    /* Estilos para a área de conteúdo dinâmico */
+    #dynamic-content-area {
+        text-align: center; /* Centraliza o conteúdo dentro da div */
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    #dynamic-content-area img {
+        max-width: 100%; /* Garante que a imagem seja responsiva */
+        height: auto; /* Mantém a proporção da imagem */
+        display: block; /* Garante que o margin auto funcione para centralizar */
+        margin: 0 auto; /* Centraliza a imagem */
+    }
+
+    /* Novo estilo para o botão de catálogo gerado dinamicamente */
+    .dynamic-button {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 15px 30px;
+      background-color: #f4e3c1;
+      color: #6b240d;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      text-decoration: none;
+    }
+
+    .dynamic-button:hover {
+      background-color: #ffe6b3;
+      transform: translateY(-2px);
+    }
+
+    /* Estilos para o iframe do YouTube */
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%; /* Proporção 16:9 */
+        height: 0;
+        overflow: hidden;
+        max-width: 100%;
+        background: #000;
+        margin-bottom: 20px;
+        border-radius: 8px; /* Optional: match container border-radius */
+    }
+
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+
+
+    /* Media Queries para Responsividade */
+    @media (max-width: 900px) {
+      /* Cabeçalho */
+      header {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        padding: 8px 15px;
+      }
+      .header-logo-and-phone {
+        margin-bottom: 15px;
+        align-items: center;
+      }
+      .header-logo img {
+        width: 150px;
+        margin-right: 0;
+        margin-bottom: 10px;
+      }
+      .header-phone {
+        font-size: 1em;
+        margin: 0;
+        text-align: center;
+      }
+      .header-service-info {
+        margin-left: 0;
+        padding: 0 10px;
+        text-align: center;
+      }
+      .header-service-info h3 {
+        font-size: 1.2em;
+      }
+      .header-service-info p {
+        font-size: 0.8em;
+      }
+      .header-service-info .phone-numbers-alt {
+        font-size: 1em;
+      }
+      /* Servicos bar responsivo */
+      .servicos-bar a {
+        padding: 10px 15px; /* Ajusta padding para caber a imagem */
+        font-size: 0.9em;
+      }
+      .servicos-bar a img {
+        height: 60px; /* Ajusta o tamanho da imagem em telas menores */
+        margin-bottom: -10px; /* Ajusta a margem negativa */
+      }
+      /* Rodapé */
+      footer {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .footer-logo img {
+        margin-right: 0;
+        margin-bottom: 15px;
+      }
+      /* Unidades no container responsivo */
+      .unidades-container a {
+        padding: 10px 20px;
+        font-size: 0.9em;
+      }
+    }
+
+    @media (max-width: 580px) {
+      .header-logo img {
+        width: 100px;
+      }
+      .footer-logo img {
+        width: 120px;
+      }
+      .servicos-bar {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .servicos-bar a {
+        width: 80%;
+        margin: 0 auto;
+        font-size: 0.9em;
+        padding: 8px 15px;
+      }
+      /* Unidades no container responsivo */
+      .unidades-container {
+        flex-direction: column;
+        align-items: center;
+      }
+      .unidades-container a {
+        width: 80%;
+        max-width: 300px;
+      }
+    }
+    @media (max-width: 400px) {
+      .header-logo img {
+        width: 80px;
+      }
+      .footer-logo img {
+        width: 100px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-logo-and-phone">
+      <div class="header-logo">
+        <img src="https://i.ibb.co/TqDkTDQX/logo-casa-microondas.png" alt="Logo Casa do Microondas">
+      </div>
+      <span class="header-phone">Telefone para contato (41) 3332-8000</span>
+    </div>
+
+    <div class="header-service-info">
+      <h3>Conserto com peças e Acessórios Originais</h3>
+      <p>Contate-nos, buscamos e entregamos seu aparelho</p>
+      <p class="phone-numbers-alt">Ligue <a href="tel:+5541985163600">98516-3600</a> ou <a href="tel:+5541985163602">98516-3602</a></p>
+    </div>
+  </header>
+
+  <div class="servicos-bar">
+    <a href="#" id="concerto-btn">
+      <img src="https://www.pngarts.com/files/3/Microwave-Oven-PNG-Transparent-Image.png" alt="Ícone de Microondas">
+      Concertos
+    </a>
+    <a href="#" id="reformas-btn"> <img src="https://cdn-icons-png.flaticon.com/512/1056/1056996.png" alt="Ícone de Ferramentas">
+      Reformas
+    </a>
+    <a href="#" id="acessorios-btn">
+      <img src="https://i.ibb.co/4ZHjNv6z/tampa-microondas.png" alt="Tampa de Microondas">
+      Acessórios
+    </a>
+    <a href="#" id="microondas-novos-btn">
+      <img src="https://i.ibb.co/KzzGHYhG/Microodas-Novo.png" alt="Microondas Novo">
+      Microondas Novos
+    </a>
+    <a href="#">
+      <img src="https://i.ibb.co/HLN4Z2Dm/Entrega.png" alt="Serviço de Entrega">
+      Serviço de Buscar e Entregar
+    </a>
+  </div>
+
+  <div class="container">
+    <hr> 
+    <div id="dynamic-content-area"></div>
+
+    <button class="open-popup-btn" id="openFormPopup">Entrar em Contato</button>
+
+    <h2 style="margin-top: 30px;">Nossas Unidades</h2>
+    <div class="unidades-container">
+      <a href="https://maps.google.com/?cid=10725946738583987470" target="_blank">Unidade Rebouças</a>
+      <a href="https://maps.google.com/?cid=16876043171139131401" target="_blank">Unidade Santa Felicidade</a>
+      <a href="#">Unidade São José dos Pinhais</a>
+    </div>
+
+  </div>
+
+  <footer>
+    <div class="footer-logo">
+      </div>
+
+    <div class="footer-unidades-buttons">
+    </div>
+
+    <p class="footer-copy">© 2025 Casa do Microondas - Todos os direitos reservados.</p>
+  </footer>
+
+  <div class="popup-overlay" id="contactPopup">
+    <div class="popup-content">
+      <button class="close-popup-btn" id="closeContactPopup">×</button> 
+      <h2>Entre em Contato</h2>
+      <form action="submit_form.php" method="POST"> 
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required autocomplete="name" />
+
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" required autocomplete="email" />
+
+        <label for="telefone">Telefone:</label>
+        <input type="tel" id="telefone" name="telefone" autocomplete="tel" />
+
+        <label for="mensagem">Mensagem:</label>
+        <textarea id="mensagem" name="mensagem" rows="5" required></textarea>
+
+        <button type="submit">Enviar Mensagem</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    // Obter referências aos elementos do pop-up
+    const openFormPopupBtn = document.getElementById('openFormPopup');
+    const contactPopup = document.getElementById('contactPopup');
+    const closeContactPopupBtn = document.getElementById('closeContactPopup');
+
+    // Função para abrir o pop-up
+    function openPopup() {
+      contactPopup.classList.add('active');
+    }
+
+    // Função para fechar o pop-up
+    function closePopup() {
+      contactPopup.classList.remove('active');
+    }
+
+    // Event listeners do pop-up
+    openFormPopupBtn.addEventListener('click', openPopup);
+    closeContactPopupBtn.addEventListener('click', closePopup);
+
+    // Fechar pop-up ao clicar fora do conteúdo
+    contactPopup.addEventListener('click', (e) => {
+      if (e.target === contactPopup) {
+        closePopup();
+      }
+    });
+
+    // Fechar pop-up ao pressionar a tecla ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && contactPopup.classList.contains('active')) {
+        closePopup();
+      }
+    });
+
+    // --- Funcionalidade da barra de serviços ---
+    const dynamicContentArea = document.getElementById('dynamic-content-area');
+
+    // Limpa a área de conteúdo dinâmico ao clicar em qualquer botão da barra de serviços,
+    // antes de carregar o novo conteúdo específico.
+    document.querySelectorAll('.servicos-bar a').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault(); // Impede o comportamento padrão do link
+            dynamicContentArea.innerHTML = ''; // Limpa o conteúdo
+        });
+    });
+
+    // --- Funcionalidade para o botão "Concertos" ---
+    const concertoBtn = document.getElementById('concerto-btn'); 
+    const concertoImageUrl = 'https://www.casadomicroondas.com.br/images/30minutos.jpg';
+
+    concertoBtn.addEventListener('click', () => { 
+      const imgElement = document.createElement('img');
+      imgElement.src = concertoImageUrl;
+      imgElement.alt = 'Conserto em 30 minutos'; 
+      dynamicContentArea.appendChild(imgElement);
+    });
+
+    // --- Funcionalidade para o botão "Microondas Novos" ---
+    const microondasNovosBtn = document.getElementById('microondas-novos-btn');
+    const microondasNovosPdfUrl = 'caminho/para/o/seu/catalogo.pdf'; // **IMPORTANTE: Substitua ESTE URL pelo URL real do seu PDF**
+
+    microondasNovosBtn.addEventListener('click', () => { 
+      const catalogoBtn = document.createElement('a');
+      catalogoBtn.href = microondasNovosPdfUrl;
+      catalogoBtn.textContent = 'CATALOGO DE MICROONDAS';
+      catalogoBtn.target = '_blank';
+      catalogoBtn.classList.add('dynamic-button'); 
+
+      dynamicContentArea.appendChild(catalogoBtn);
+    });
+
+    // --- Funcionalidade para o botão "Acessórios" ---
+    const acessoriosBtn = document.getElementById('acessorios-btn');
+    const acessoriosPdfUrl = 'caminho/para/o/seu/catalogo_acessorios.pdf'; // **IMPORTANTE: Substitua ESTE URL pelo URL real do seu PDF de acessórios**
+
+    acessoriosBtn.addEventListener('click', () => { 
+      const catalogoAcessoriosBtn = document.createElement('a');
+      catalogoAcessoriosBtn.href = acessoriosPdfUrl;
+      catalogoAcessoriosBtn.textContent = 'CATALOGO DE ACESSÓRIOS';
+      catalogoAcessoriosBtn.target = '_blank';
+      catalogoAcessoriosBtn.classList.add('dynamic-button'); 
+
+      dynamicContentArea.appendChild(catalogoAcessoriosBtn);
+    });
+
+    // --- Nova funcionalidade para o botão "Reformas" ---
+    const reformasBtn = document.getElementById('reformas-btn');
+    const youtubeVideoId = 'dQw4w9WgXcQ'; // **IMPORTANTE: Substitua 'dQw4w9WgXcQ' pelo ID REAL do seu vídeo do YouTube**
+    const whatsappNumber = '5541985163600'; // Formato: DDI DDD NUMERO (Ex: 5541985163600)
+    const whatsappMessage = encodeURIComponent('Olá, gostaria de pedir um orçamento para reforma de microondas.'); // Mensagem pré-preenchida
+    const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+
+    reformasBtn.addEventListener('click', () => {
+      // 1. Título e lema
+      const titleP = document.createElement('p');
+      titleP.textContent = 'Casa do Microondas Curitiba - Com estacionamento próprio';
+      titleP.style.fontWeight = 'bold';
+      titleP.style.fontSize = '1.1em';
+      titleP.style.marginBottom = '10px';
+      dynamicContentArea.appendChild(titleP);
+
+      const sloganP = document.createElement('p');
+      sloganP.textContent = 'Nosso lema: “Atender bem para atender sempre”';
+      sloganP.style.fontStyle = 'italic';
+      sloganP.style.marginBottom = '20px';
+      dynamicContentArea.appendChild(sloganP);
+
+      // 2. Vídeo do YouTube
+      const videoContainer = document.createElement('div');
+      videoContainer.classList.add('video-container'); // Aplica os estilos de responsividade
+      
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube.com/watch?v=oZ0rHe4Ovgs&ab_channel=reinaldolages${youtubeVideoId}`;
+      iframe.frameBorder = '0';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true; // Permite tela cheia
+
+      videoContainer.appendChild(iframe);
+      dynamicContentArea.appendChild(videoContainer);
+
+      // 3. Botão do WhatsApp
+      const whatsappBtn = document.createElement('a');
+      whatsappBtn.href = whatsappLink;
+      whatsappBtn.textContent = 'Peça já seu orçamento';
+      whatsappBtn.target = '_blank';
+      whatsappBtn.classList.add('dynamic-button'); // Reutiliza o estilo do botão
+      dynamicContentArea.appendChild(whatsappBtn);
+
+      // 4. Mensagem final
+      const finalMessageDiv = document.createElement('div');
+      finalMessageDiv.style.marginTop = '25px';
+      finalMessageDiv.style.textAlign = 'center';
+      finalMessageDiv.style.fontSize = '0.95em';
+      finalMessageDiv.style.color = '#f4e3c1';
+
+      finalMessageDiv.innerHTML = `
+        <p>Contate-nos, buscamos e entregamos seu aparelho. Conserto de Microondas em Curitiba</p>
+        <p style="margin-top: 10px; font-weight: bold;">Muito obrigado pela sua visita!</p>
+        <p style="margin-top: 10px;">Devido à Pandemia do COVID-19 estamos atendendo das 08:30h às 17:30h e a</p>
+        <p>avaliação na hora é feita até as 16h</p>
+        <p style="margin-top: 10px; font-weight: bold;">(41) 3332-8000 - Opção 01 - Rebouças | Opção 02 - Santa Felicidade</p>
+        <p style="margin-top: 5px;">Atendemos em Curitiba</p>
+      `;
+      dynamicContentArea.appendChild(finalMessageDiv);
+    });
+
+  </script>
+</body>
+</html>
